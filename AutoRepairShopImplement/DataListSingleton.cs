@@ -15,6 +15,8 @@ namespace AutoRepairShopImplement
         public List<SOrder> Orders { get; set; }
         public List<Good> Products { get; set; }
         public List<GoodComponent> ProductComponents { get; set; }
+        public List<SStock> Stocks { get; set; }
+        public List<SStockComponent> StockComponents { get; set; }
         private DataListSingleton()
         {
             Clients = new List<SClient>();
@@ -22,6 +24,8 @@ namespace AutoRepairShopImplement
             Orders = new List<SOrder>();
             Products = new List<Good>();
             ProductComponents = new List<GoodComponent>();
+            Stocks = new List<SStock>();
+            StockComponents = new List<SStockComponent>();
         }
         public static DataListSingleton GetInstance()
         {

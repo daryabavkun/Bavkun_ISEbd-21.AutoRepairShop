@@ -98,7 +98,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Name = "FormAutoRepairShopProducts";
             this.Text = "Изделия";
-            this.Load += new System.EventHandler(this.FormAutoRepairShopProducts_Load);
+            this.Load += new System.EventHandler(this.FormAutoRepairShopGoods_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 

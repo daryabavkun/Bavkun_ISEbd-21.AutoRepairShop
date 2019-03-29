@@ -15,5 +15,6 @@ namespace AutoRepairShopDAL.Interface
         void TakeOrderInWork(SOrderBinding model);
         void FinishOrder(SOrderBinding model);
         void PayOrder(SOrderBinding model);
+        void PutComponentOnStock(SStockComponentBinding model);
     }
 }

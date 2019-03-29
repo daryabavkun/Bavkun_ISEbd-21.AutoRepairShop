@@ -19,53 +19,28 @@ namespace AutoRepairShopImplement.Implementation
         }
         public List<SOrderView> GetList()
         {
-            List<SOrderView> result = new List<SOrderView>();
-            for (int i = 0; i < source.Orders.Count; ++i)
-            {
-                string clientFIO = string.Empty;
-                for (int j = 0; j < source.Clients.Count; ++j)
+            List<SOrderView> result = source.Orders
+                .Select(rec => new SOrderView
                 {
-                    if (source.Clients[j].Id == source.Orders[i].ClientId)
-                    {
-                        clientFIO = source.Clients[j].ClientFIO;
-                        break;
-                    }
-                }
-                string productName = string.Empty;
-                for (int j = 0; j < source.Products.Count; ++j)
-                {
-                    if (source.Products[j].Id == source.Orders[i].ProductId)
-                    {
-                        productName = source.Products[j].ProductName;
-                        break;
-                    }
-                }
-                result.Add(new SOrderView
-                {
-                    Id = source.Orders[i].Id,
-                    ClientId = source.Orders[i].ClientId,
-                    ClientFIO = clientFIO,
-                    ProductId = source.Orders[i].ProductId,
-                    ProductName = productName,
-                    Count = source.Orders[i].Count,
-                    Sum = source.Orders[i].Sum,
-                    DateCreate = source.Orders[i].DateCreate.ToLongDateString(),
-                    DateImplement = source.Orders[i].DateImplement?.ToLongDateString(),
-                    Status = source.Orders[i].Status.ToString()
-                });
-            }
+                    Id = rec.Id,
+                    ClientId = rec.ClientId,
+                    ProductId = rec.ProductId,
+                    DateCreate = rec.DateCreate.ToLongDateString(),
+                    DateImplement = rec.DateImplement?.ToLongDateString(),
+                    Status = rec.Status.ToString(),
+                    Count = rec.Count,
+                    Sum = rec.Sum,
+                    ClientFIO = source.Clients.FirstOrDefault(recC => recC.Id ==
+                    rec.ClientId)?.ClientFIO,
+                    ProductName = source.Products.FirstOrDefault(recP => recP.Id ==
+                   rec.ProductId)?.ProductName,
+                })
+                .ToList();
             return result;
         }
         public void CreateOrder(SOrderBinding model)
         {
-            int maxId = 0;
-            for (int i = 0; i < source.Orders.Count; ++i)
-            {
-                if (source.Orders[i].Id > maxId)
-                {
-                    maxId = source.Orders[i].Id;
-                }
-            }
+            int maxId = source.Orders.Count > 0 ? source.Orders.Max(rec => rec.Id) : 0;
             source.Orders.Add(new SOrder
             {
                 Id = maxId + 1,
@@ -79,68 +54,103 @@ namespace AutoRepairShopImplement.Implementation
         }
         public void TakeOrderInWork(SOrderBinding model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Orders.Count; ++i)
-            {
-                if (source.Orders[i].Id == model.Id)
-                {
-                    index = i;
-                    break;
-                }
-            }
-            if (index == -1)
+            SOrder element = source.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            if (source.Orders[index].Status != SOrderStatus.Принят)
+            if (element.Status != SOrderStatus.Принят)
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
             }
-            source.Orders[index].DateImplement = DateTime.Now;
-            source.Orders[index].Status = SOrderStatus.Выполняется;
+            // смотрим по количеству компонентов на складах
+            var productComponents = source.ProductComponents.Where(rec => rec.ProductId
+           == element.ProductId);
+            foreach (var productComponent in productComponents)
+            {
+                int countOnStocks = source.StockComponents
+                .Where(rec => rec.ComponentId ==
+               productComponent.ComponentId)
+               .Sum(rec => rec.Count);
+                if (countOnStocks < productComponent.Count * element.Count)
+                {
+                    var componentName = source.Components.FirstOrDefault(rec => rec.Id ==
+                   productComponent.ComponentId);
+                    throw new Exception("Не достаточно компонента " +
+                   componentName?.ComponentName + " требуется " + (productComponent.Count * element.Count) +
+                   ", в наличии " + countOnStocks);
+                }
+            }
+            // списываем
+            foreach (var productComponent in productComponents)
+            {
+                int countOnStocks = productComponent.Count * element.Count;
+                var stockComponents = source.StockComponents.Where(rec => rec.ComponentId
+               == productComponent.ComponentId);
+                foreach (var stockComponent in stockComponents)
+                {
+                    // компонентов на одном слкаде может не хватать
+                    if (stockComponent.Count >= countOnStocks)
+                    {
+                        stockComponent.Count -= countOnStocks;
+                        break;
+                    }
+                    else
+                    {
+                        countOnStocks -= stockComponent.Count;
+                        stockComponent.Count = 0;
+                    }
+                }
+            }
+            element.DateImplement = DateTime.Now;
+            element.Status = SOrderStatus.Выполняется;
         }
         public void FinishOrder(SOrderBinding model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Orders.Count; ++i)
-            {
-                if (source.Orders[i].Id == model.Id)
-                {
-                    index = i;
-                    break;
-                }
-            }
-            if (index == -1)
+            SOrder element = source.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            if (source.Orders[index].Status != SOrderStatus.Выполняется)
+            if (element.Status != SOrderStatus.Выполняется)
             {
                 throw new Exception("Заказ не в статусе \"Выполняется\"");
             }
-            source.Orders[index].Status = SOrderStatus.Готов;
+            element.Status = SOrderStatus.Готов;
         }
         public void PayOrder(SOrderBinding model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Orders.Count; ++i)
-            {
-                if (source.Orders[i].Id == model.Id)
-                {
-                    index = i;
-                    break;
-                }
-            }
-            if (index == -1)
+            SOrder element = source.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            if (source.Orders[index].Status != SOrderStatus.Готов)
+            if (element.Status != SOrderStatus.Готов)
             {
                 throw new Exception("Заказ не в статусе \"Готов\"");
             }
-            source.Orders[index].Status = SOrderStatus.Оплачен;
+            element.Status = SOrderStatus.Оплачен;
         }
-
+        public void PutComponentOnStock(SStockComponentBinding model)
+        {
+            SStockComponent element = source.StockComponents.FirstOrDefault(rec =>
+           rec.StockId == model.StockId && rec.ComponentId == model.ComponentId);
+            if (element != null)
+            {
+                element.Count += model.Count;
+            }
+            else
+            {
+                int maxId = source.StockComponents.Count > 0 ?
+               source.StockComponents.Max(rec => rec.Id) : 0;
+                source.StockComponents.Add(new SStockComponent
+                {
+                    Id = ++maxId,
+                    StockId = model.StockId,
+                    ComponentId = model.ComponentId,
+                    Count = model.Count
+                });
+            }
+        }
     }
 }

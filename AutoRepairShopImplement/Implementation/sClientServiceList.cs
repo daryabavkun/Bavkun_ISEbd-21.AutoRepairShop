@@ -20,46 +20,36 @@ namespace AutoRepairShopImplementList.Implementation
         }
         public List<SClientView> GetList()
         {
-            List<SClientView> result = new List<SClientView>();
-            for (int i = 0; i < source.Clients.Count; ++i)
+            List<SClientView> result = source.Clients.Select(rec => new SClientView
             {
-                result.Add(new SClientView
-                {
-                    Id = source.Clients[i].Id,
-                    ClientFIO = source.Clients[i].ClientFIO
-                });
-            }
+                Id = rec.Id,
+                ClientFIO = rec.ClientFIO
+            })
+ .ToList();
             return result;
         }
         public SClientView GetElement(int id)
         {
-            for (int i = 0; i < source.Clients.Count; ++i)
+            SClient element = source.Clients.FirstOrDefault(rec => rec.Id == id);
+            if (element != null)
             {
-                if (source.Clients[i].Id == id)
+                return new SClientView
                 {
-                    return new SClientView
-                    {
-                        Id = source.Clients[i].Id,
-                        ClientFIO = source.Clients[i].ClientFIO
-                    };
-                }
+                    Id = element.Id,
+                    ClientFIO = element.ClientFIO
+                };
             }
             throw new Exception("Элемент не найден");
         }
         public void AddElement(SClientBinding model)
         {
-            int maxId = 0;
-            for (int i = 0; i < source.Clients.Count; ++i)
+            SClient element = source.Clients.FirstOrDefault(rec => rec.ClientFIO ==
+           model.ClientFIO);
+            if (element != null)
             {
-                if (source.Clients[i].Id > maxId)
-                {
-                    maxId = source.Clients[i].Id;
-                }
-                if (source.Clients[i].ClientFIO == model.ClientFIO)
-                {
-                    throw new Exception("Уже есть клиент с таким ФИО");
-                }
+                throw new Exception("Уже есть клиент с таким ФИО");
             }
+            int maxId = source.Clients.Count > 0 ? source.Clients.Max(rec => rec.Id) : 0;
             source.Clients.Add(new SClient
             {
                 Id = maxId + 1,
@@ -68,36 +58,30 @@ namespace AutoRepairShopImplementList.Implementation
         }
         public void UpdElement(SClientBinding model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Clients.Count; ++i)
+            SClient element = source.Clients.FirstOrDefault(rec => rec.ClientFIO ==
+           model.ClientFIO && rec.Id != model.Id);
+            if (element != null)
             {
-                if (source.Clients[i].Id == model.Id)
-                {
-                    index = i;
-                }
-                if (source.Clients[i].ClientFIO == model.ClientFIO &&
-                source.Clients[i].Id != model.Id)
-                {
-                    throw new Exception("Уже есть клиент с таким ФИО");
-                }
+                throw new Exception("Уже есть клиент с таким ФИО");
             }
-            if (index == -1)
+            element = source.Clients.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            source.Clients[index].ClientFIO = model.ClientFIO;
+            element.ClientFIO = model.ClientFIO;
         }
         public void DelElement(int id)
         {
-            for (int i = 0; i < source.Clients.Count; ++i)
+            SClient element = source.Clients.FirstOrDefault(rec => rec.Id == id);
+            if (element != null)
             {
-                if (source.Clients[i].Id == id)
-                {
-                    source.Clients.RemoveAt(i);
-                    return;
-                }
+                source.Clients.Remove(element);
             }
-            throw new Exception("Элемент не найден");
+            else
+            {
+                throw new Exception("Элемент не найден");
+            }
         }
     }
 }
