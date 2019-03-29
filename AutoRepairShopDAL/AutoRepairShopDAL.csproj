@@ -46,16 +46,21 @@
     <Compile Include="Binding\SOrderBinding.cs" />
     <Compile Include="Binding\GoodBinding.cs" />
     <Compile Include="Binding\GoodComponentBinding.cs" />
+    <Compile Include="Binding\SStockBinding.cs" />
+    <Compile Include="Binding\SStockComponentBinding.cs" />
     <Compile Include="Interface\ISClient.cs" />
     <Compile Include="Interface\ISComponent.cs" />
     <Compile Include="Interface\IMain.cs" />
     <Compile Include="Interface\IGood.cs" />
+    <Compile Include="Interface\ISStock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\SClientView.cs" />
     <Compile Include="View\SComponentView.cs" />
     <Compile Include="View\SOrderView.cs" />
     <Compile Include="View\GoodComponentView.cs" />
     <Compile Include="View\GoodView.cs" />
+    <Compile Include="View\SStockComponentView.cs" />
+    <Compile Include="View\SStockView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AutoRepairShop\AutoRepairShop.csproj">

@@ -48,6 +48,8 @@
     <Compile Include="SComponent.cs" />
     <Compile Include="GoodComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SStock.cs" />
+    <Compile Include="SStockComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

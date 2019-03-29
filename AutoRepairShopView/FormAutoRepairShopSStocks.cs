@@ -6,21 +6,20 @@ using System.Windows.Forms;
 using Unity;
 using AutoRepairShopDAL.Binding;
 
+
 namespace AutoRepairShopView
 {
-    public partial class FormAutoRepairShopGoods : Form
+    public partial class FormAutoRepairShopSStocks : Form
     {
         [Dependency]
         public new IUnityContainer Container { get; set; }
-        private readonly IGood service;
-        private int Id;
-
-        public FormAutoRepairShopGoods(IGood service)
+        private readonly ISStock service;
+        public FormAutoRepairShopSStocks(ISStock service)
         {
             InitializeComponent();
             this.service = service;
         }
-        private void FormAutoRepairShopGoods_Load(object sender, EventArgs e)
+        private void FormAutoRepairShopSStocks_Load(object sender, EventArgs e)
         {
             LoadData();
         }
@@ -28,12 +27,12 @@ namespace AutoRepairShopView
         {
             try
             {
-                List<GoodView> list = service.GetList();
+                List<SStockView> list = service.GetList();
                 if (list != null)
                 {
-                    dataGridView1.DataSource = list;
-                    dataGridView1.Columns[0].Visible = false;
-                    dataGridView1.Columns[1].AutoSizeMode =
+                    dataGridView.DataSource = list;
+                    dataGridView.Columns[0].Visible = false;
+                    dataGridView.Columns[1].AutoSizeMode =
                     DataGridViewAutoSizeColumnMode.Fill;
                 }
             }
@@ -44,25 +43,34 @@ namespace AutoRepairShopView
         }
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormAutoRepairShopGood>();
+            var form = Container.Resolve<FormAutoRepairShopSStock>();
             if (form.ShowDialog() == DialogResult.OK)
             {
                 LoadData();
             }
         }
 
-        private void buttonUpDate_Click(object sender, EventArgs e)
+        private void buttonChange_Click(object sender, EventArgs e)
         {
-            LoadData();
+            if (dataGridView.SelectedRows.Count == 1)
+            {
+                var form = Container.Resolve<FormAutoRepairShopSStock>();
+                form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    LoadData();
+                }
+            }
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedRows.Count == 1)
+            if (dataGridView.SelectedRows.Count == 1)
             {
                 if (MessageBox.Show("Удалить запись", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
+                    int id =
+                   Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                     try
                     {
                         service.DelElement(id);
@@ -76,17 +84,9 @@ namespace AutoRepairShopView
             }
         }
 
-        private void buttonChange_Click(object sender, EventArgs e)
+        private void buttonUpDate_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedRows.Count == 1)
-            {
-                var form = Container.Resolve<FormAutoRepairShopGood>();
-                form.Id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    LoadData();
-                }
-            }
+            LoadData();
         }
     }
 }

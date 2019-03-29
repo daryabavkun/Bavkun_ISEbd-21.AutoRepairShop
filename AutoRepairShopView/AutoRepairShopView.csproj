@@ -64,6 +64,12 @@
     <Compile Include="FormAutoRepairShop.Designer.cs">
       <DependentUpon>FormAutoRepairShop.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormAutoRepairShopPutOnStock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAutoRepairShopPutOnStock.Designer.cs">
+      <DependentUpon>FormAutoRepairShopPutOnStock.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormAutoRepairShopSClient.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,10 +118,25 @@
     <Compile Include="FormAutoRepairShopGoodComponent.Designer.cs">
       <DependentUpon>FormAutoRepairShopGoodComponent.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormAutoRepairShopSStock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAutoRepairShopSStock.Designer.cs">
+      <DependentUpon>FormAutoRepairShopSStock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormAutoRepairShopSStocks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAutoRepairShopSStocks.Designer.cs">
+      <DependentUpon>FormAutoRepairShopSStocks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormAutoRepairShop.resx">
       <DependentUpon>FormAutoRepairShop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAutoRepairShopPutOnStock.resx">
+      <DependentUpon>FormAutoRepairShopPutOnStock.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormAutoRepairShopSClient.resx">
       <DependentUpon>FormAutoRepairShopSClient.cs</DependentUpon>
@@ -141,6 +162,12 @@
     <EmbeddedResource Include="FormAutoRepairShopGoodComponent.resx">
       <DependentUpon>FormAutoRepairShopGoodComponent.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormAutoRepairShopSStock.resx">
+      <DependentUpon>FormAutoRepairShopSStock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAutoRepairShopSStocks.resx">
+      <DependentUpon>FormAutoRepairShopSStocks.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -164,6 +191,8 @@
     <None Include="Properties\DataSources\AutoRepairShopDAL.Binding.SClientBinding.datasource" />
     <None Include="Properties\DataSources\AutoRepairShopDAL.View.GoodComponentView.datasource" />
     <None Include="Properties\DataSources\AutoRepairShopDAL.View.ProductComponentView.datasource" />
+    <None Include="Properties\DataSources\AutoRepairShopDAL.View.SComponentView.datasource" />
+    <None Include="Properties\DataSources\AutoRepairShopDAL.View.SStockView.datasource" />
     <None Include="Properties\DataSources\AutoRepairShopView.Properties.Resources.datasource" />
     <None Include="Properties\DataSources\AutoRepairShopView.Properties.Settings.datasource" />
     <None Include="Properties\DataSources\FormAutoRepairShop.datasource" />

@@ -36,6 +36,7 @@ namespace AutoRepairShopView
             currentContainer.RegisterType<ISComponent, SComponentServiceList>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IGood, GoodServiceList>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IMain, MainServiceList>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<ISStock, SStockServiceList>(new HierarchicalLifetimeManager());
             return currentContainer;
         }
     }

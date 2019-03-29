@@ -46,6 +46,7 @@
     <Compile Include="Implementation\SComponentServiceList.cs" />
     <Compile Include="Implementation\MainServiceList.cs" />
     <Compile Include="Implementation\GoodServiceList.cs" />
+    <Compile Include="Implementation\SStockServiceList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
