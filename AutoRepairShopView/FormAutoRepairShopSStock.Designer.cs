@@ -93,6 +93,7 @@
             this.Controls.Add(this.label);
             this.Name = "FormAutoRepairShopSStock";
             this.Text = "Склад";
+            this.Load += new System.EventHandler(this.FormAutoRepairShopSStock_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

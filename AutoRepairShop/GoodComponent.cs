@@ -15,5 +15,7 @@ namespace AutoRepairShop
         public int ProductId { get; set; }
         public int ComponentId { get; set; }
         public int Count { get; set; }
+        public virtual SComponent Component { get; set; }
+        public virtual Good Product { get; set; }
     }
 }

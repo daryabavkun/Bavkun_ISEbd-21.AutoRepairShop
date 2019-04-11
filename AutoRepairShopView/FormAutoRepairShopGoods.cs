@@ -13,7 +13,6 @@ namespace AutoRepairShopView
         [Dependency]
         public new IUnityContainer Container { get; set; }
         private readonly IGood service;
-        private int Id;
 
         public FormAutoRepairShopGoods(IGood service)
         {

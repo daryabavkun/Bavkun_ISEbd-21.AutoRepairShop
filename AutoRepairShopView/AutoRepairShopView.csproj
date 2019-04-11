@@ -33,7 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -278,6 +285,10 @@
     <ProjectReference Include="..\AutoRepairShopImplement\AutoRepairShopImplementList.csproj">
       <Project>{23a5e7e5-4c30-4874-b99b-b15f22f104da}</Project>
       <Name>AutoRepairShopImplementList</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoRepairShopServiceImplementDataBase\AutoRepairShopServiceImplementDataBase.csproj">
+      <Project>{13a38651-d856-4211-882c-01c2bf569865}</Project>
+      <Name>AutoRepairShopServiceImplementDataBase</Name>
     </ProjectReference>
     <ProjectReference Include="..\AutoRepairShop\AutoRepairShop.csproj">
       <Project>{6269b0bd-8c41-47d3-ac0e-062a943ed031}</Project>
