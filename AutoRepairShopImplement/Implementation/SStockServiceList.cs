@@ -24,7 +24,7 @@ namespace AutoRepairShopImplement.Implementation
             {
                 Id = rec.Id,
                 StockName = rec.StockName,
-                StockComponents = source.StockComponents
+                StockComponent = source.StockComponents
                 .Where(recPC => recPC.StockId == rec.Id)
                 .Select(recPC => new SStockComponentView
                 {
@@ -50,7 +50,7 @@ namespace AutoRepairShopImplement.Implementation
                 {
                     Id = element.Id,
                     StockName = element.StockName,
-                    StockComponents = source.StockComponents
+                    StockComponent = source.StockComponents
                 .Where(recPC => recPC.StockId == element.Id)
                .Select(recPC => new SStockComponentView
                {

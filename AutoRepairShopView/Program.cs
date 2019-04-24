@@ -12,6 +12,9 @@ using System.Windows.Forms;
 using Unity;
 using Unity.Lifetime;
 using AutoRepairShopImplement.Implementation;
+using System.Data.Entity;
+using AutoRepairShopServiceImplementDataBase;
+using AutoRepairShopServiceImplementDataBase.Implementations;
 
 namespace AutoRepairShopView
 {
@@ -32,11 +35,14 @@ namespace AutoRepairShopView
         public static IUnityContainer BuildUnityContainer()
         {
             var currentContainer = new UnityContainer();
-            currentContainer.RegisterType<ISClient, SClientServiceList>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<ISComponent, SComponentServiceList>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IGood, GoodServiceList>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IMain, MainServiceList>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<ISStock, SStockServiceList>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<DbContext, AutoRepairShopDbContext>(new
+HierarchicalLifetimeManager());
+
+            currentContainer.RegisterType<ISClient, SClientServiceDB>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<ISComponent, SComponentServiceDB>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IGood, GoodServiceDB>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IMain, MainServiceDB>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<ISStock, SStockServiceDB>(new HierarchicalLifetimeManager());
             return currentContainer;
         }
     }

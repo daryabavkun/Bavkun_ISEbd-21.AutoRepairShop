@@ -25,7 +25,7 @@ namespace AutoRepairShopImplement.Implementation
                  Id = rec.Id,
                  ProductName = rec.ProductName,
                  Price = rec.Price,
-                 ProductComponents = source.ProductComponents
+                 ProductComponent = source.ProductComponents
                  .Where(recPC => recPC.ProductId == rec.Id)
                 .Select(recPC => new GoodComponentView
                 {
@@ -51,7 +51,7 @@ namespace AutoRepairShopImplement.Implementation
                     Id = element.Id,
                     ProductName = element.ProductName,
                     Price = element.Price,
-                    ProductComponents = source.ProductComponents
+                    ProductComponent = source.ProductComponents
                 .Where(recPC => recPC.ProductId == element.Id)
                 .Select(recPC => new GoodComponentView
                 {
