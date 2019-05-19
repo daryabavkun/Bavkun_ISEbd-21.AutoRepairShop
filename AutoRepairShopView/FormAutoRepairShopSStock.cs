@@ -31,7 +31,7 @@ namespace AutoRepairShopView
                     if (view != null)
                     {
                         textBoxName.Text = view.StockName;
-                        dataGridView.DataSource = view.StockComponents;
+                        dataGridView.DataSource = view.StockComponent;
                         dataGridView.Columns[0].Visible = false;
                         dataGridView.Columns[1].Visible = false;
                         dataGridView.Columns[2].Visible = false;

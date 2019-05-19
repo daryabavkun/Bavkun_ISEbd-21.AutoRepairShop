@@ -19,5 +19,7 @@ namespace AutoRepairShop
         public SOrderStatus Status { get; set; }
         public DateTime DateCreate { get; set; }
         public DateTime? DateImplement { get; set; }
+        public virtual SClient Client { get; set; }
+        public virtual Good Product { get; set; }
     }
 }

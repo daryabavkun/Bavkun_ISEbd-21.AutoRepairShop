@@ -50,7 +50,21 @@ namespace AutoRepairShopView
         }
         private void buttonUpDate_Click(object sender, EventArgs e)
         {
-            LoadData();
+            
+
+            if (dataGridView.SelectedRows.Count == 1)
+            {
+                var form = Container.Resolve<FormAutoRepairShopSComponent>();
+                form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    LoadData();
+                }
+            }
+
+
+
+
         }
         private void buttonDelete_Click(object sender, EventArgs e)
         {

@@ -14,6 +14,6 @@ namespace AutoRepairShopDAL.View
         public string ProductName { get; set; }
         [DisplayName("Цена")]
         public decimal Price { get; set; }
-        public List<GoodComponentView> ProductComponents { get; set; }
+        public List<GoodComponentView> ProductComponent { get; set; }
     }
 }

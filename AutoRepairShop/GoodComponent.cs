@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace AutoRepairShop
 {
     /// <summary>
@@ -15,5 +16,7 @@ namespace AutoRepairShop
         public int ProductId { get; set; }
         public int ComponentId { get; set; }
         public int Count { get; set; }
+        public virtual Good Good { get; set; }
+        public virtual SComponent SComponent { get; set; }
     }
 }

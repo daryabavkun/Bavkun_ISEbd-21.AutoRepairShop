@@ -32,7 +32,7 @@ namespace AutoRepairShopView
                     {
                         textBox1.Text = view.ProductName;
                         textBox2.Text = view.Price.ToString();
-                        productComponents = view.ProductComponents;
+                        productComponents = view.ProductComponent;
                         LoadData();
                     }
                 }

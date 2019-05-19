@@ -12,6 +12,6 @@ namespace AutoRepairShopDAL.View
         public int Id { get; set; }
         [DisplayName("Название склада")]
         public string StockName { get; set; }
-        public List<SStockComponentView> StockComponents { get; set; }
+        public List<SStockComponentView> StockComponent { get; set; }
     }
 }
