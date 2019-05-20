@@ -22,7 +22,7 @@ namespace AutoRepairShopServiceImplementDataBase.Implementations
         }
         public List<SOrderView> GetList()
         {
-            List<SOrderView> result = context.Orders.Select(rec => new SOrderView
+            List<SOrderView> result = context.SOrders.Select(rec => new SOrderView
             {
                 Id = rec.Id,
                 ClientId = rec.ClientId,
@@ -48,7 +48,7 @@ namespace AutoRepairShopServiceImplementDataBase.Implementations
         }
         public void CreateOrder(SOrderBinding model)
         {
-            context.Orders.Add(new SOrder
+            context.SOrders.Add(new SOrder
             {
                 ClientId = model.ClientId,
                 ProductId = model.ProductId,
@@ -65,7 +65,7 @@ namespace AutoRepairShopServiceImplementDataBase.Implementations
             {
                 try
                 {
-                    SOrder element = context.Orders.FirstOrDefault(rec => rec.Id ==
+                    SOrder element = context.SOrders.FirstOrDefault(rec => rec.Id ==
                    model.Id);
                     if (element == null)
                     {
@@ -119,7 +119,7 @@ namespace AutoRepairShopServiceImplementDataBase.Implementations
         }
         public void FinishOrder(SOrderBinding model)
         {
-            SOrder element = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+            SOrder element = context.SOrders.FirstOrDefault(rec => rec.Id == model.Id);
             if (element == null)
             {
                 throw new Exception("Элемент не найден");
@@ -133,7 +133,7 @@ namespace AutoRepairShopServiceImplementDataBase.Implementations
         }
         public void PayOrder(SOrderBinding model)
         {
-            SOrder element = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+            SOrder element = context.SOrders.FirstOrDefault(rec => rec.Id == model.Id);
             if (element == null)
             {
                 throw new Exception("Элемент не найден");

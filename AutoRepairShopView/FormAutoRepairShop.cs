@@ -20,10 +20,13 @@ namespace AutoRepairShopView
         [Dependency]
         public new IUnityContainer Container { get; set; }
         private readonly IMain service;
-        public FormAutoRepairShop(IMain service)
+        private readonly IReport reportService;
+
+        public FormAutoRepairShop(IMain service, IReport reportService)
         {
             InitializeComponent();
             this.service = service;
+            this.reportService = reportService;
         }
         private void LoadData()
         {
@@ -147,6 +150,43 @@ namespace AutoRepairShopView
         private void FormAutoRepairShop_Load(object sender, EventArgs e)
         {
             LoadData();
+        }
+
+        private void прайсИзделийToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                Filter = "doc|*.doc|docx|*.docx"
+            };
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    reportService.SaveProductPrice(new ReportBinding
+                    {
+                        FileName = sfd.FileName
+                    });
+                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
+                   MessageBoxIcon.Error);
+                }
+            }
+        }
+        private void загруженностьСкладовToolStripMenuItem_Click(object sender, EventArgs
+       e)
+        {
+            var form = Container.Resolve<FormStocksLoad>();
+            
+        form.ShowDialog();
+        }
+        private void заказыКлиентовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormClientOrders>();
+            form.ShowDialog();
         }
     }
 }

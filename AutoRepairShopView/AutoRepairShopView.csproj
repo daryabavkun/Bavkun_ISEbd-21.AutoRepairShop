@@ -39,6 +39,21 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Runtime.Common.12.0.2402.15\lib\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Runtime.Common.12.0.2402.15\lib\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Runtime.Common.12.0.2402.15\lib\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Runtime.WebForms.12.0.2402.15\lib\Microsoft.ReportViewer.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.Runtime.WinForms.12.0.2402.15\lib\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -48,6 +63,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -137,6 +153,18 @@
     <Compile Include="FormAutoRepairShopSStocks.Designer.cs">
       <DependentUpon>FormAutoRepairShopSStocks.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormClientOrders.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormClientOrders.Designer.cs">
+      <DependentUpon>FormClientOrders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStocksLoad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStocksLoad.Designer.cs">
+      <DependentUpon>FormStocksLoad.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormAutoRepairShop.resx">
@@ -175,6 +203,12 @@
     <EmbeddedResource Include="FormAutoRepairShopSStocks.resx">
       <DependentUpon>FormAutoRepairShopSStocks.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormClientOrders.resx">
+      <DependentUpon>FormClientOrders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStocksLoad.resx">
+      <DependentUpon>FormStocksLoad.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -184,6 +218,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ReportClientOrders.rdlc" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\AutoRepairShop.Client.datasource" />
     <None Include="Properties\DataSources\AutoRepairShop.Component.datasource" />
@@ -198,6 +233,7 @@
     <None Include="Properties\DataSources\AutoRepairShopDAL.Binding.SClientBinding.datasource" />
     <None Include="Properties\DataSources\AutoRepairShopDAL.View.GoodComponentView.datasource" />
     <None Include="Properties\DataSources\AutoRepairShopDAL.View.ProductComponentView.datasource" />
+    <None Include="Properties\DataSources\AutoRepairShopDAL.View.SClientOrders.datasource" />
     <None Include="Properties\DataSources\AutoRepairShopDAL.View.SComponentView.datasource" />
     <None Include="Properties\DataSources\AutoRepairShopDAL.View.SStockView.datasource" />
     <None Include="Properties\DataSources\AutoRepairShopView.Properties.Resources.datasource" />
@@ -285,10 +321,6 @@
     <ProjectReference Include="..\AutoRepairShopDAL\AutoRepairShopDAL.csproj">
       <Project>{779898d2-0afe-4d29-a066-1a204d850757}</Project>
       <Name>AutoRepairShopDAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoRepairShopImplement\AutoRepairShopImplementList.csproj">
-      <Project>{23a5e7e5-4c30-4874-b99b-b15f22f104da}</Project>
-      <Name>AutoRepairShopImplementList</Name>
     </ProjectReference>
     <ProjectReference Include="..\AutoRepairShop\AutoRepairShop.csproj">
       <Project>{6269b0bd-8c41-47d3-ac0e-062a943ed031}</Project>
