@@ -7,11 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AutoRepairShopImplementList.Implementation;
 using System.Windows.Forms;
 using Unity;
 using Unity.Lifetime;
-using AutoRepairShopImplement.Implementation;
 using System.Data.Entity;
 using AutoRepairShopServiceImplementDataBase;
 using AutoRepairShopServiceImplementDataBase.Implementations;
@@ -43,6 +41,7 @@ HierarchicalLifetimeManager());
             currentContainer.RegisterType<IGood, GoodServiceDB>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<IMain, MainServiceDB>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<ISStock, SStockServiceDB>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IReport, ReportServiceDB>(new HierarchicalLifetimeManager());
             return currentContainer;
         }
     }
