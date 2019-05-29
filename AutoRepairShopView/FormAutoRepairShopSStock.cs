@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using AutoRepairShopDAL.View;
 using AutoRepairShopDAL.Interface;
 using System.Windows.Forms;
-using Unity;
 using AutoRepairShopDAL.Binding;
 
 
@@ -11,15 +10,11 @@ namespace AutoRepairShopView
 {
     public partial class FormAutoRepairShopSStock : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
         public int Id { set { id = value; } }
-        private readonly ISStock service;
         private int? id;
-        public FormAutoRepairShopSStock(ISStock service)
+        public FormAutoRepairShopSStock()
         {
             InitializeComponent();
-            this.service = service;
         }
         private void FormAutoRepairShopSStock_Load(object sender, EventArgs e)
         {
@@ -27,7 +22,7 @@ namespace AutoRepairShopView
             {
                 try
                 {
-                    SStockView view = service.GetElement(id.Value);
+                    SStockView view = APIClient.GetRequest<SStockView>("api/Stock/Get/" + id.Value);
                     if (view != null)
                     {
                         textBoxName.Text = view.StockName;
@@ -59,7 +54,7 @@ namespace AutoRepairShopView
             {
                 if (id.HasValue)
                 {
-                    service.UpdElement(new SStockBinding
+                    APIClient.PostRequest<SStockBinding, bool>("api/Stock/UpdElement", new SStockBinding
                     {
                         Id = id.Value,
                         StockName = textBoxName.Text
@@ -67,7 +62,7 @@ namespace AutoRepairShopView
                 }
                 else
                 {
-                    service.AddElement(new SStockBinding
+                    APIClient.PostRequest<SStockBinding, bool>("api/Stock/AddElement", new SStockBinding
                     {
                         StockName = textBoxName.Text
                     });

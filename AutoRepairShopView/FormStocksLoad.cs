@@ -1,5 +1,5 @@
 ﻿using AutoRepairShopDAL.Binding;
-using AutoRepairShopDAL.Interface;
+using AutoRepairShopDAL.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,25 +9,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Unity;
 
 namespace AutoRepairShopView
 {
     public partial class FormStocksLoad : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-        private readonly IReport service;
-        public FormStocksLoad(IReport service)
+        public FormStocksLoad()
         {
             InitializeComponent();
-            this.service = service;
         }
         private void FormStocksLoad_Load(object sender, EventArgs e)
         {
             try
             {
-                var dict = service.GetStocksLoad();
+                var dict = APIClient.GetRequest<List<SStocksLoadView>>("api/Report/GetStocksLoad");
                 if (dict != null)
                 {
                     dataGridView.Rows.Clear();
@@ -61,7 +56,7 @@ listElem.Item2 });
             {
                 try
                 {
-                    service.SaveStocksLoad(new ReportBinding
+                    APIClient.PostRequest<ReportBinding, bool>("api/Report/SaveStocksLoad", new ReportBinding
                     {
                         FileName = sfd.FileName
                     });

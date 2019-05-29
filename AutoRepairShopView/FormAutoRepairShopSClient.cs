@@ -3,21 +3,16 @@ using AutoRepairShopDAL.Binding;
 using AutoRepairShopDAL.View;
 using AutoRepairShopDAL.Interface;
 using System.Windows.Forms;
-using Unity;
 
 namespace AutoRepairShopView
 {
     public partial class FormAutoRepairShopSClient : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
         public int Id { set { id = value; } }
-        private readonly ISClient service;
         private int? id;
-        public FormAutoRepairShopSClient(ISClient service)
+        public FormAutoRepairShopSClient()
         {
             InitializeComponent();
-            this.service = service;
         }
         private void FormAutoRepairShopClient_Load(object sender, EventArgs e)
         {
@@ -25,11 +20,8 @@ namespace AutoRepairShopView
             {
                 try
                 {
-                    SClientView view = service.GetElement(id.Value);
-                    if (view != null)
-                    {
-                        textBoxFIO.Text = view.ClientFIO;
-                    }
+                    SClientView client = APIClient.GetRequest<SClientView>("api/Client/Get/" + id.Value);
+                    textBoxFIO.Text = client.ClientFIO;
                 }
                 catch (Exception ex)
                 {
@@ -48,7 +40,7 @@ namespace AutoRepairShopView
             {
                 if (id.HasValue)
                 {
-                    service.UpdElement(new SClientBinding
+                    APIClient.PostRequest<SClientBinding, bool>("api/Client/UpdElement", new SClientBinding
                     {
                         Id = id.Value,
                         ClientFIO = textBoxFIO.Text
@@ -56,7 +48,7 @@ namespace AutoRepairShopView
                 }
                 else
                 {
-                    service.AddElement(new SClientBinding
+                    APIClient.PostRequest<SClientBinding, bool>("api/Client/AddElement", new SClientBinding
                     {
                         ClientFIO = textBoxFIO.Text
                     });
