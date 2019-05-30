@@ -3,23 +3,18 @@ using System.Collections.Generic;
 using AutoRepairShopDAL.View;
 using AutoRepairShopDAL.Interface;
 using System.Windows.Forms;
-using Unity;
 using AutoRepairShopDAL.Binding;
 
 namespace AutoRepairShopView
 {
     public partial class FormAutoRepairShopGood : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
         public int Id { set { id = value; } }
-        private readonly IGood service;
         private int? id;
         private List<GoodComponentView> productComponents;
-        public FormAutoRepairShopGood(IGood service)
+        public FormAutoRepairShopGood()
         {
             InitializeComponent();
-            this.service = service;
         }
         private void FormAutoRepairShopProduct_Load(object sender, EventArgs e)
         {
@@ -27,7 +22,7 @@ namespace AutoRepairShopView
             {
                 try
                 {
-                    GoodView view = service.GetElement(id.Value);
+                    GoodView view = APIClient.GetRequest<GoodView>("api/Gift/Get/" + id.Value);
                     if (view != null)
                     {
                         textBox1.Text = view.ProductName;
@@ -74,7 +69,7 @@ namespace AutoRepairShopView
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormAutoRepairShopGoodComponent>();
+            var form = new FormAutoRepairShopGoodComponent();
             if (form.ShowDialog() == DialogResult.OK)
             {
                 if (form.Model != null)
@@ -148,7 +143,7 @@ namespace AutoRepairShopView
                 }
                 if (id.HasValue)
                 {
-                    service.UpdElement(new GoodBinding
+                    APIClient.PostRequest<GoodBinding, bool>("api/Gift/UpdElement", new GoodBinding
                     {
                         Id = id.Value,
                         ProductName = textBox1.Text,
@@ -158,7 +153,7 @@ namespace AutoRepairShopView
                 }
                 else
                 {
-                    service.AddElement(new GoodBinding
+                    APIClient.PostRequest<GoodBinding, bool>("api/Gift/AddElement", new GoodBinding
                     {
                         ProductName = textBox1.Text,
                         Price = Convert.ToInt32(textBox2.Text),
@@ -179,7 +174,7 @@ namespace AutoRepairShopView
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                var form = Container.Resolve<FormAutoRepairShopGoodComponent>();
+                var form = new FormAutoRepairShopGoodComponent();
                 form.Model =
                productComponents[dataGridView.SelectedRows[0].Cells[0].RowIndex];
                 if (form.ShowDialog() == DialogResult.OK)

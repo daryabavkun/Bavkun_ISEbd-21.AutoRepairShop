@@ -5,7 +5,6 @@ using AutoRepairShopDAL.Binding;
 using AutoRepairShopDAL.View;
 using AutoRepairShopDAL.Interface;
 using System.Windows.Forms;
-using Unity;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -17,22 +16,15 @@ namespace AutoRepairShopView
 {
     public partial class FormAutoRepairShop : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-        private readonly IMain service;
-        private readonly IReport reportService;
-
-        public FormAutoRepairShop(IMain service, IReport reportService)
+        public FormAutoRepairShop()
         {
             InitializeComponent();
-            this.service = service;
-            this.reportService = reportService;
         }
         private void LoadData()
         {
             try
             {
-                List<SOrderView> list = service.GetList();
+                List<SOrderView> list = APIClient.GetRequest<List<SOrderView>>("api/Main/GetList");
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
@@ -53,37 +45,37 @@ namespace AutoRepairShopView
 
         private void клиентыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormAutoRepairShopSClients>();
+            var form = new FormAutoRepairShopSClients();
             form.ShowDialog();
         }
 
         private void компонентыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormAutoRepairShopSComponents>();
+            var form = new FormAutoRepairShopSComponents();
             form.ShowDialog();
         }
 
         private void изделияToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormAutoRepairShopGoods>();
+            var form = new FormAutoRepairShopGoods();
             form.ShowDialog();
         }
 
         private void складыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormAutoRepairShopSStocks>();
+            var form = new FormAutoRepairShopSStocks();
             form.ShowDialog();
         }
 
         private void пополнитьСкладToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormAutoRepairShopPutOnStock>();
+            var form = new FormAutoRepairShopPutOnStock();
             form.ShowDialog();
         }
 
         private void buttonCreateOrder_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormAutoRepairShopCreateSOrder>();
+            var form = new FormAutoRepairShopCreateSOrder();
             form.ShowDialog();
             LoadData();
         }
@@ -95,7 +87,7 @@ namespace AutoRepairShopView
                 int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 try
                 {
-                    service.TakeOrderInWork(new SOrderBinding { Id = id });
+                    APIClient.PostRequest<SOrderBinding, bool>("api/Main/TakeOrderInWork", new SOrderBinding { Id = id });
                     LoadData();
                 }
                 catch (Exception ex)
@@ -113,7 +105,7 @@ namespace AutoRepairShopView
                 int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 try
                 {
-                    service.FinishOrder(new SOrderBinding { Id = id });
+                    APIClient.PostRequest<SOrderBinding, bool>("api/Main/FinishOrder", new SOrderBinding { Id = id });
                     LoadData();
                 }
                 catch (Exception ex)
@@ -131,7 +123,7 @@ namespace AutoRepairShopView
                 int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 try
                 {
-                    service.PayOrder(new SOrderBinding { Id = id });
+                    APIClient.PostRequest<SOrderBinding, bool>("api/Main/PayOrder", new SOrderBinding { Id = id });
                     LoadData();
                 }
                 catch (Exception ex)
@@ -162,7 +154,7 @@ namespace AutoRepairShopView
             {
                 try
                 {
-                    reportService.SaveProductPrice(new ReportBinding
+                    APIClient.PostRequest<ReportBinding, bool>("api/Report/SaveProductPrice", new ReportBinding
                     {
                         FileName = sfd.FileName
                     });
@@ -179,13 +171,13 @@ namespace AutoRepairShopView
         private void загруженностьСкладовToolStripMenuItem_Click(object sender, EventArgs
        e)
         {
-            var form = Container.Resolve<FormStocksLoad>();
+            var form = new FormStocksLoad();
             
         form.ShowDialog();
         }
         private void заказыКлиентовToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormClientOrders>();
+            var form = new FormClientOrders();
             form.ShowDialog();
         }
     }

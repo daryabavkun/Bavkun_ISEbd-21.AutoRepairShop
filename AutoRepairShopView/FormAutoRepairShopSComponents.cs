@@ -3,20 +3,15 @@ using System.Collections.Generic;
 using AutoRepairShopDAL.View;
 using AutoRepairShopDAL.Interface;
 using System.Windows.Forms;
-using Unity;
 using AutoRepairShopDAL.Binding;
 
 namespace AutoRepairShopView
 {
     public partial class FormAutoRepairShopSComponents : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-        private readonly ISComponent service;
-        public FormAutoRepairShopSComponents(ISComponent service)
+        public FormAutoRepairShopSComponents()
         {
             InitializeComponent();
-            this.service = service;
         }
         private void FormAutoRepairShopComponents_Load(object sender, EventArgs e)
         {
@@ -26,7 +21,7 @@ namespace AutoRepairShopView
         {
             try
             {
-                List<SComponentView> list = service.GetList();
+                List<SComponentView> list = APIClient.GetRequest<List<SComponentView>>("api/Materials/GetList"); 
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
@@ -42,7 +37,7 @@ namespace AutoRepairShopView
         }
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormAutoRepairShopSComponent>();
+            var form = new FormAutoRepairShopSComponent();
             if (form.ShowDialog() == DialogResult.OK)
             {
                 LoadData();
@@ -54,7 +49,7 @@ namespace AutoRepairShopView
 
             if (dataGridView.SelectedRows.Count == 1)
             {
-                var form = Container.Resolve<FormAutoRepairShopSComponent>();
+                var form = new FormAutoRepairShopSComponent();
                 form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 if (form.ShowDialog() == DialogResult.OK)
                 {
@@ -76,7 +71,7 @@ namespace AutoRepairShopView
                    Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                     try
                     {
-                        service.DelElement(id);
+                        APIClient.PostRequest<SComponentBinding, bool>("api/Material/DelElement", new SComponentBinding { Id = id });
                     }
                     catch (Exception ex)
                     {
@@ -90,7 +85,7 @@ namespace AutoRepairShopView
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                var form = Container.Resolve<FormAutoRepairShopSComponent>();
+                var form = new FormAutoRepairShopSComponent();
                 form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 if (form.ShowDialog() == DialogResult.OK)
                 {

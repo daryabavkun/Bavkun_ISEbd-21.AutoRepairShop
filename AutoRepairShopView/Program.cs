@@ -8,8 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Unity;
-using Unity.Lifetime;
 using System.Data.Entity;
 using AutoRepairShopServiceImplementDataBase;
 using AutoRepairShopServiceImplementDataBase.Implementations;
@@ -24,25 +22,10 @@ namespace AutoRepairShopView
         [STAThread]
         static void Main()
         {
-            var container = BuildUnityContainer();
-
+            APIClient.Connect();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(container.Resolve<FormAutoRepairShop>());
-        }
-        public static IUnityContainer BuildUnityContainer()
-        {
-            var currentContainer = new UnityContainer();
-            currentContainer.RegisterType<DbContext, AutoRepairShopDbContext>(new
-HierarchicalLifetimeManager());
-
-            currentContainer.RegisterType<ISClient, SClientServiceDB>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<ISComponent, SComponentServiceDB>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IGood, GoodServiceDB>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IMain, MainServiceDB>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<ISStock, SStockServiceDB>(new HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IReport, ReportServiceDB>(new HierarchicalLifetimeManager());
-            return currentContainer;
+            Application.Run(new FormAutoRepairShop());
         }
     }
 }

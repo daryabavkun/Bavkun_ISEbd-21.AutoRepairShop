@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using AutoRepairShopDAL.View;
 using AutoRepairShopDAL.Interface;
 using System.Windows.Forms;
-using Unity;
 using AutoRepairShopDAL.Binding;
 
 namespace AutoRepairShopView
 {
     public partial class FormAutoRepairShopGoodComponent : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
         public GoodComponentView Model
         {
             set { model = value; }
@@ -20,18 +17,16 @@ namespace AutoRepairShopView
                 return model;
             }
         }
-        private readonly ISComponent service;
         private GoodComponentView model;
-        public FormAutoRepairShopGoodComponent(ISComponent service)
+        public FormAutoRepairShopGoodComponent()
         {
             InitializeComponent();
-            this.service = service;
         }
         private void FormAutoRepairShopProductComponent_Load(object sender, EventArgs e)
         {
             try
             {
-                List<SComponentView> list = service.GetList();
+                List<SComponentView> list = APIClient.GetRequest<List<SComponentView>>("api/Materials/GetList");
                 if (list != null)
                 {
                     comboBox.DisplayMember = "ComponentName";
