@@ -13,7 +13,7 @@ namespace AutoRepairShopServiceImplementDataBase.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201905301729285_FirstM"; }
+            get { return "201905301834358_FirstM"; }
         }
         
         string IMigrationMetadata.Source
