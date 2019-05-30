@@ -26,7 +26,7 @@ namespace AutoRepairShopView
         {
             try
             {
-                List<SComponentView> list = APIClient.GetRequest<List<SComponentView>>("api/Materials/GetList");
+                List<SComponentView> list = APIClient.GetRequest<List<SComponentView>>("api/Component/GetList");
                 if (list != null)
                 {
                     comboBox.DisplayMember = "ComponentName";

@@ -25,5 +25,6 @@ namespace AutoRepairShopServiceImplementDataBase
         public virtual DbSet<GoodComponent> ProductComponents { get; set; }
         public virtual DbSet<SStock> Stocks { get; set; }
         public virtual DbSet<SStockComponent> StockComponents { get; set; }
+        public virtual DbSet<Implementer> Implementers { get; set; }
     }
 }

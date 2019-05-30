@@ -1,63 +1,69 @@
 ﻿using System;
 using System.Collections.Generic;
-using AutoRepairShopDAL.View;
-using AutoRepairShopDAL.Interface;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using AutoRepairShopDAL.Binding;
+using AutoRepairShopDAL.View;
 
 namespace AutoRepairShopView
 {
-    public partial class FormAutoRepairShopSComponent : Form
+    public partial class FormImplementer : Form
     {
         public int Id { set { id = value; } }
         private int? id;
-        public FormAutoRepairShopSComponent()
+
+        public FormImplementer()
         {
             InitializeComponent();
         }
-        private void FormAutoRepairShopComponent_Load(object sender, EventArgs e)
+        private void FormImplementer_Load(object sender, EventArgs e)
         {
             if (id.HasValue)
             {
                 try
                 {
-                    SComponentView view = APIClient.GetRequest<SComponentView>("api/Component/Get/" + id.Value); ;
+                    ImplementerView view = APIClient.GetRequest<ImplementerView>("api/Implementer/Get/" + id.Value);
                     if (view != null)
                     {
-                        textBox.Text = view.ComponentName;
+                        textBoxFIO.Text = view.ImplementerFIO;
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                   MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(textBox.Text))
+            if (string.IsNullOrEmpty(textBoxFIO.Text))
             {
-                MessageBox.Show("Заполните название", "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show("Заполните ФИО", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             try
             {
                 if (id.HasValue)
                 {
-                    APIClient.PostRequest<SComponentBinding, bool>("api/Component/UpdElement", new SComponentBinding
-                    {
-                        Id = id.Value,
-                        ComponentName = textBox.Text
-                    });
+                    APIClient.PostRequest<ImplementerBinding,
+                   bool>("api/Implementer/UpdElement", new ImplementerBinding
+                   {
+                       Id = id.Value,
+                       ImplementerFIO = textBoxFIO.Text
+                   });
                 }
                 else
                 {
-                    APIClient.PostRequest<SComponentBinding, bool>("api/Component/AddElement", new SComponentBinding
-                    {
-                        ComponentName = textBox.Text
-                    });
+                    APIClient.PostRequest<ImplementerBinding,
+                   bool>("api/Implementer/AddElement", new ImplementerBinding
+                   {
+                       ImplementerFIO = textBoxFIO.Text
+                   });
                 }
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;

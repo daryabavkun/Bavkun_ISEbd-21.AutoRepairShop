@@ -25,7 +25,7 @@ namespace AutoRepairShopView
                     comboBox1.DataSource = listC;
                     comboBox1.SelectedItem = null;
                 }
-                List<GoodView> listP = APIClient.GetRequest<List<GoodView>>("api/Gift/GetList");
+                List<GoodView> listP = APIClient.GetRequest<List<GoodView>>("api/Good/GetList");
                 if (listP != null)
                 {
                     comboBox2.DisplayMember = "ProductName";
@@ -48,7 +48,7 @@ namespace AutoRepairShopView
                 try
                 {
                     int id = Convert.ToInt32(comboBox2.SelectedValue);
-                    GoodView product = APIClient.GetRequest<GoodView>("api/Gift/Get/" + id);
+                    GoodView product = APIClient.GetRequest<GoodView>("api/Good/Get/" + id);
                     int count = Convert.ToInt32(textBox.Text);
                     textBox2.Text = (count * product.Price).ToString();
                 }

@@ -25,6 +25,10 @@ namespace AutoRepairShopDAL.View
         public string ProductName { get; set; }
         [DisplayName("Количество")]
         [DataMember]
+        public int? ImplementerId { get; set; }
+        [DataMember]
+        public string ImplementerName { get; set; }
+        [DataMember]
         public int Count { get; set; }
         [DisplayName("Сумма")]
         [DataMember]

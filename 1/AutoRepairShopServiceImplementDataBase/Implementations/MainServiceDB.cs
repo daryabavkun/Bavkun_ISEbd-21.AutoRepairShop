@@ -46,6 +46,17 @@ namespace AutoRepairShopServiceImplementDataBase.Implementations
             .ToList();
             return result;
         }
+        public List<SOrderView> GetFreeOrders()
+        {
+            List<SOrderView> result = context.SOrders
+                .Where(x => x.Status == SOrderStatus.Принят || x.Status == SOrderStatus.НедостаточноРесурсов)
+                .Select(rec => new SOrderView
+                {
+                    Id = rec.Id
+                })
+                .ToList();
+            return result;
+        }
         public void CreateOrder(SOrderBinding model)
         {
             context.SOrders.Add(new SOrder

@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Binding\ImplementerBinding.cs" />
     <Compile Include="Binding\ReportBinding.cs" />
     <Compile Include="Binding\SClientBinding.cs" />
     <Compile Include="Binding\SComponentBinding.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="Binding\GoodComponentBinding.cs" />
     <Compile Include="Binding\SStockBinding.cs" />
     <Compile Include="Binding\SStockComponentBinding.cs" />
+    <Compile Include="Interface\IImplementer.cs" />
     <Compile Include="Interface\IReport.cs" />
     <Compile Include="Interface\ISClient.cs" />
     <Compile Include="Interface\ISComponent.cs" />
@@ -57,6 +59,7 @@
     <Compile Include="Interface\IGood.cs" />
     <Compile Include="Interface\ISStock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\ImplementerView.cs" />
     <Compile Include="View\SClientOrders.cs" />
     <Compile Include="View\SClientView.cs" />
     <Compile Include="View\SComponentView.cs" />

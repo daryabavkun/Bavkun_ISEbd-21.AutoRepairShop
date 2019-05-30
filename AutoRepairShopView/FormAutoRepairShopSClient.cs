@@ -35,7 +35,7 @@ namespace AutoRepairShopView
         }
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(textBoxFIO.Text))
+                if (string.IsNullOrEmpty(textBoxFIO.Text))
             {
                 MessageBox.Show("Заполните ФИО", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
