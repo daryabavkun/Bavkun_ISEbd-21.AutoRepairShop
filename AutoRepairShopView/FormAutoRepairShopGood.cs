@@ -22,7 +22,7 @@ namespace AutoRepairShopView
             {
                 try
                 {
-                    GoodView view = APIClient.GetRequest<GoodView>("api/Gift/Get/" + id.Value);
+                    GoodView view = APIClient.GetRequest<GoodView>("api/Good/Get/" + id.Value);
                     if (view != null)
                     {
                         textBox1.Text = view.ProductName;
@@ -143,7 +143,7 @@ namespace AutoRepairShopView
                 }
                 if (id.HasValue)
                 {
-                    APIClient.PostRequest<GoodBinding, bool>("api/Gift/UpdElement", new GoodBinding
+                    APIClient.PostRequest<GoodBinding, bool>("api/Good/UpdElement", new GoodBinding
                     {
                         Id = id.Value,
                         ProductName = textBox1.Text,
@@ -153,7 +153,7 @@ namespace AutoRepairShopView
                 }
                 else
                 {
-                    APIClient.PostRequest<GoodBinding, bool>("api/Gift/AddElement", new GoodBinding
+                    APIClient.PostRequest<GoodBinding, bool>("api/Good/AddElement", new GoodBinding
                     {
                         ProductName = textBox1.Text,
                         Price = Convert.ToInt32(textBox2.Text),

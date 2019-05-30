@@ -48,6 +48,8 @@ namespace AutoRepairShopRestApi
             // container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<DbContext, AutoRepairShopDbContext>(new
            HierarchicalLifetimeManager());
+            container.RegisterType<IImplementer, ImplementerServiceDB>(new 
+                HierarchicalLifetimeManager());
             container.RegisterType<ISClient, SClientServiceDB>(new
            HierarchicalLifetimeManager());
             container.RegisterType<ISComponent, SComponentServiceDB>(new

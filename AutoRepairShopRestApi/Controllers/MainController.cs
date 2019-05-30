@@ -6,15 +6,19 @@ using System.Net.Http;
 using System.Web.Http;
 using AutoRepairShopDAL.Binding;
 using AutoRepairShopDAL.Interface;
+using AutoRepairShopRestApi.Services;
+using AutoRepairShopDAL.View;
 
 namespace AutoRepairShopRestApi.Controllers
 {
     public class MainController : ApiController
     {
         private readonly IMain _service;
-        public MainController(IMain service)
+        private readonly IImplementer _serviceImplementer;
+        public MainController(IMain service, IImplementer serviceImplementer)
         {
             _service = service;
+            _serviceImplementer = serviceImplementer;
         }
         [HttpGet]
         public IHttpActionResult GetList()
@@ -31,16 +35,7 @@ namespace AutoRepairShopRestApi.Controllers
         {
             _service.CreateOrder(model);
         }
-        [HttpPost]
-        public void TakeOrderInWork(SOrderBinding model)
-        {
-            _service.TakeOrderInWork(model);
-        }
-        [HttpPost]
- public void FinishOrder(SOrderBinding model)
-        {
-            _service.FinishOrder(model);
-        }
+        
         [HttpPost]
         public void PayOrder(SOrderBinding model)
         {
@@ -50,6 +45,20 @@ namespace AutoRepairShopRestApi.Controllers
         public void PutComponentOnStock(SStockComponentBinding model)
         {
             _service.PutComponentOnStock(model);
+        }
+        [HttpPost]
+        public void StartWork()
+        {
+            List<SOrderView> orders = _service.GetFreeOrders();
+            foreach (var order in orders)
+            {
+                ImplementerView impl = _serviceImplementer.GetFreeWorker();
+                if (impl == null)
+                {
+                    throw new Exception("Нет сотрудников");
+                }
+                new WorkImplementer(_service, _serviceImplementer, impl.Id, order.Id);
+            }
         }
     }
 }

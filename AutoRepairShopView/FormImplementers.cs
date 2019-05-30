@@ -1,33 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using AutoRepairShopDAL.View;
-using AutoRepairShopDAL.Interface;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using AutoRepairShopDAL.Binding;
+using AutoRepairShopDAL.View;
+using AutoRepairShop;
 
 namespace AutoRepairShopView
 {
-    public partial class FormAutoRepairShopSComponents : Form
+    public partial class FormImplementers : Form
     {
-        public FormAutoRepairShopSComponents()
+        public FormImplementers()
         {
             InitializeComponent();
         }
-        private void FormAutoRepairShopComponents_Load(object sender, EventArgs e)
+        private void FormImplementers_Load(object sender, EventArgs e)
         {
             LoadData();
         }
+
         private void LoadData()
         {
             try
             {
-                List<SComponentView> list = APIClient.GetRequest<List<SComponentView>>("api/Component/GetList"); 
+                List<ImplementerView> list = APIClient.GetRequest<List<ImplementerView>>("api/Implementer/GetList");
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
                     dataGridView.Columns[0].Visible = false;
-                    dataGridView.Columns[1].AutoSizeMode =
-                    DataGridViewAutoSizeColumnMode.Fill;
+                    dataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
             }
             catch (Exception ex)
@@ -37,41 +43,37 @@ namespace AutoRepairShopView
         }
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = new FormAutoRepairShopSComponent();
+            var form = new FormImplementer();
             if (form.ShowDialog() == DialogResult.OK)
             {
                 LoadData();
             }
         }
-        private void buttonUpDate_Click(object sender, EventArgs e)
-        {
-            
 
+        private void buttonUpd_Click(object sender, EventArgs e)
+        {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                var form = new FormAutoRepairShopSComponent();
+                var form = new FormImplementer();
                 form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 if (form.ShowDialog() == DialogResult.OK)
                 {
                     LoadData();
                 }
             }
-
-
-
-
         }
-        private void buttonDelete_Click(object sender, EventArgs e)
+
+        private void buttonDel_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
                 if (MessageBox.Show("Удалить запись", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     int id =
-                   Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
+                    Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                     try
                     {
-                        APIClient.PostRequest<SComponentBinding, bool>("api/Component/DelElement", new SComponentBinding { Id = id });
+                        APIClient.PostRequest<ImplementerBinding, bool>("api/Implementer/DelElement", new ImplementerBinding { Id = id });
                     }
                     catch (Exception ex)
                     {
@@ -81,17 +83,10 @@ namespace AutoRepairShopView
                 }
             }
         }
-        private void buttonChange_Click(object sender, EventArgs e)
+
+        private void buttonRef_Click(object sender, EventArgs e)
         {
-            if (dataGridView.SelectedRows.Count == 1)
-            {
-                var form = new FormAutoRepairShopSComponent();
-                form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    LoadData();
-                }
-            }
+            LoadData();
         }
     }
 }

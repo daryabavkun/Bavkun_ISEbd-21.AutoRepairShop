@@ -18,7 +18,7 @@ namespace AutoRepairShopView
         {
             try
             {
-                List<SComponentView> listC = APIClient.GetRequest<List<SComponentView>>("api/Materials/GetList");
+                List<SComponentView> listC = APIClient.GetRequest<List<SComponentView>>("api/Component/GetList");
                 if (listC != null)
                 {
                     comboBoxComponent.DisplayMember = "ComponentName";
@@ -63,7 +63,7 @@ namespace AutoRepairShopView
             }
             try
             {
-                APIClient.PostRequest<SStockComponentBinding, bool>("api/Main/PutMaterialsOnStock", new SStockComponentBinding
+                APIClient.PostRequest<SStockComponentBinding, bool>("api/Main/PutComponentOnStock", new SStockComponentBinding
                 {
                     ComponentId = Convert.ToInt32(comboBoxComponent.SelectedValue),
                     StockId = Convert.ToInt32(comboBoxStock.SelectedValue),

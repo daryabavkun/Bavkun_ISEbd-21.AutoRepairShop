@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoRepairShopDbContext.cs" />
+    <Compile Include="Implementations\ImplementerServiceDB.cs" />
     <Compile Include="Implementations\ReportServiceDB.cs" />
     <Compile Include="Implementations\SComponentServiceDB.cs" />
     <Compile Include="Implementations\GoodServiceDB.cs" />
@@ -78,6 +79,14 @@
     <Compile Include="Migrations\201905301834358_FirstM.cs" />
     <Compile Include="Migrations\201905301834358_FirstM.Designer.cs">
       <DependentUpon>201905301834358_FirstM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905301951300_SecondM.cs" />
+    <Compile Include="Migrations\201905301951300_SecondM.Designer.cs">
+      <DependentUpon>201905301951300_SecondM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905302138291_ThirdM.cs" />
+    <Compile Include="Migrations\201905302138291_ThirdM.Designer.cs">
+      <DependentUpon>201905302138291_ThirdM.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,6 +114,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201905301834358_FirstM.resx">
       <DependentUpon>201905301834358_FirstM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905301951300_SecondM.resx">
+      <DependentUpon>201905301951300_SecondM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905302138291_ThirdM.resx">
+      <DependentUpon>201905302138291_ThirdM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

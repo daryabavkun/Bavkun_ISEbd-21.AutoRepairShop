@@ -38,6 +38,16 @@ namespace AutoRepairShopImplement.Implementation
                 .ToList();
             return result;
         }
+        public List<SOrderView> GetFreeOrders()
+        {
+            List<SOrderView> result = source.Orders
+                .Select(rec => new SOrderView
+                {
+                    Id = rec.Id
+                })
+                .ToList();
+            return result;
+        }
         public void CreateOrder(SOrderBinding model)
         {
             int maxId = source.Orders.Count > 0 ? source.Orders.Max(rec => rec.Id) : 0;

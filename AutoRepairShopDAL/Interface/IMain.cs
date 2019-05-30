@@ -11,6 +11,7 @@ namespace AutoRepairShopDAL.Interface
     public interface IMain
     {
         List<SOrderView> GetList();
+        List<SOrderView> GetFreeOrders();
         void CreateOrder(SOrderBinding model);
         void TakeOrderInWork(SOrderBinding model);
         void FinishOrder(SOrderBinding model);
