@@ -42,7 +42,7 @@ namespace AutoRepairShopServiceImplementDataBase.Implementations
                 Sum = rec.Sum,
                 ClientFIO = rec.Client.ClientFIO,
                 ProductName = rec.Product.ProductName,
-                ImplementerName = rec.Implementer.ImplementerFIO,
+                ImplementerFIO = rec.Implementer.ImplementerFIO,
                 ImplementerId = rec.ImplementerId
             })
             .ToList();

@@ -28,7 +28,7 @@ namespace AutoRepairShopDAL.View
         public int? ImplementerId { get; set; }
         [DisplayName("Имя сотрудника")]
         [DataMember]
-        public string ImplementerName { get; set; }
+        public string ImplementerFIO { get; set; }
         [DisplayName("Количество")]
         [DataMember]
         public int Count { get; set; }
