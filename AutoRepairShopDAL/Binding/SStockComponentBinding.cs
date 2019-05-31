@@ -17,6 +17,7 @@ namespace AutoRepairShopDAL.Binding
         [DataMember]
         public int ComponentId { get; set; }
         [DataMember]
-        public int Count { get; set; }
+        public int Count { get; set; }
+
     }
 }

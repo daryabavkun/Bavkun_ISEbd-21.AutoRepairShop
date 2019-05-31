@@ -41,7 +41,9 @@ namespace AutoRepairShopServiceImplementDataBase.Implementations
                 Count = rec.Count,
                 Sum = rec.Sum,
                 ClientFIO = rec.Client.ClientFIO,
-                ProductName = rec.Product.ProductName
+                ProductName = rec.Product.ProductName,
+                ImplementerName = rec.Implementer.ImplementerFIO,
+                ImplementerId = rec.ImplementerId
             })
             .ToList();
             return result;
@@ -120,6 +122,7 @@ namespace AutoRepairShopServiceImplementDataBase.Implementations
                     element.Status = SOrderStatus.Выполняется;
                     context.SaveChanges();
                     transaction.Commit();
+                    element.ImplementerId = model.ImplementerId;
                 }
                 catch (Exception)
                 {
