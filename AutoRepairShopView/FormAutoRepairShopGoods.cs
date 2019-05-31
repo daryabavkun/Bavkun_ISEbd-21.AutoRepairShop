@@ -21,7 +21,7 @@ namespace AutoRepairShopView
         {
             try
             {
-                List<GoodView> list = APIClient.GetRequest<List<GoodView>>("api/Gift/GetList/");
+                List<GoodView> list = APIClient.GetRequest<List<GoodView>>("api/Good/GetList/");
                 if (list != null)
                 {
                     dataGridView1.DataSource = list;
@@ -58,7 +58,7 @@ namespace AutoRepairShopView
                     int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
                     try
                     {
-                        APIClient.PostRequest<GoodBinding, bool>("api/Gift/DelElement", new GoodBinding { Id = id });
+                        APIClient.PostRequest<GoodBinding, bool>("api/Good/DelElement", new GoodBinding { Id = id });
                     }
                     catch (Exception ex)
                     {

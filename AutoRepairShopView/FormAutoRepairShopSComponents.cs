@@ -21,7 +21,7 @@ namespace AutoRepairShopView
         {
             try
             {
-                List<SComponentView> list = APIClient.GetRequest<List<SComponentView>>("api/Materials/GetList"); 
+                List<SComponentView> list = APIClient.GetRequest<List<SComponentView>>("api/Component/GetList"); 
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
@@ -71,7 +71,7 @@ namespace AutoRepairShopView
                    Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                     try
                     {
-                        APIClient.PostRequest<SComponentBinding, bool>("api/Material/DelElement", new SComponentBinding { Id = id });
+                        APIClient.PostRequest<SComponentBinding, bool>("api/Component/DelElement", new SComponentBinding { Id = id });
                     }
                     catch (Exception ex)
                     {
