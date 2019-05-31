@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoRepairShopServiceImplementDataBase;
+using System.Runtime.Serialization;
 
 namespace AutoRepairShopServiceImplementDataBase.Implementations
 {

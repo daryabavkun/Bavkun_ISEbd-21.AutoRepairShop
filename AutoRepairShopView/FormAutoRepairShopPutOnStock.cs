@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using AutoRepairShopDAL.View;
 using AutoRepairShopDAL.Interface;
 using System.Windows.Forms;
-using Unity;
 using AutoRepairShopDAL.Binding;
 
 
@@ -11,24 +10,15 @@ namespace AutoRepairShopView
 {
     public partial class FormAutoRepairShopPutOnStock : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-        private readonly ISStock serviceS;
-        private readonly ISComponent serviceC;
-        private readonly IMain serviceM;
-        public FormAutoRepairShopPutOnStock(ISStock serviceS, ISComponent serviceC,
-       IMain serviceM)
+        public FormAutoRepairShopPutOnStock()
         {
             InitializeComponent();
-            this.serviceS = serviceS;
-            this.serviceC = serviceC;
-            this.serviceM = serviceM;
         }
         private void FormPutOnStock_Load(object sender, EventArgs e)
         {
             try
             {
-                List<SComponentView> listC = serviceC.GetList();
+                List<SComponentView> listC = APIClient.GetRequest<List<SComponentView>>("api/Component/GetList");
                 if (listC != null)
                 {
                     comboBoxComponent.DisplayMember = "ComponentName";
@@ -36,7 +26,7 @@ namespace AutoRepairShopView
                     comboBoxComponent.DataSource = listC;
                     comboBoxComponent.SelectedItem = null;
                 }
-                List<SStockView> listS = serviceS.GetList();
+                List<SStockView> listS = APIClient.GetRequest<List<SStockView>>("api/Stock/GetList"); 
                 if (listS != null)
                 {
                     comboBoxStock.DisplayMember = "StockName";
@@ -73,7 +63,7 @@ namespace AutoRepairShopView
             }
             try
             {
-                serviceM.PutComponentOnStock(new SStockComponentBinding
+                APIClient.PostRequest<SStockComponentBinding, bool>("api/Main/PutComponentsOnStock", new SStockComponentBinding
                 {
                     ComponentId = Convert.ToInt32(comboBoxComponent.SelectedValue),
                     StockId = Convert.ToInt32(comboBoxStock.SelectedValue),

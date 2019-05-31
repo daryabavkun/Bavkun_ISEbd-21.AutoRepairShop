@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using AutoRepairShopDAL.View;
 using AutoRepairShopDAL.Interface;
 using System.Windows.Forms;
-using Unity;
 using AutoRepairShopDAL.Binding;
 
 
@@ -11,13 +10,9 @@ namespace AutoRepairShopView
 {
     public partial class FormAutoRepairShopSStocks : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-        private readonly ISStock service;
-        public FormAutoRepairShopSStocks(ISStock service)
+        public FormAutoRepairShopSStocks()
         {
             InitializeComponent();
-            this.service = service;
         }
         private void FormAutoRepairShopSStocks_Load(object sender, EventArgs e)
         {
@@ -27,7 +22,7 @@ namespace AutoRepairShopView
         {
             try
             {
-                List<SStockView> list = service.GetList();
+                List<SStockView> list = APIClient.GetRequest<List<SStockView>>("api/Stock/GetList");
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
@@ -43,7 +38,7 @@ namespace AutoRepairShopView
         }
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormAutoRepairShopSStock>();
+            var form =new FormAutoRepairShopSStock();
             if (form.ShowDialog() == DialogResult.OK)
             {
                 LoadData();
@@ -54,7 +49,7 @@ namespace AutoRepairShopView
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                var form = Container.Resolve<FormAutoRepairShopSStock>();
+                var form = new FormAutoRepairShopSStock();
                 form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 if (form.ShowDialog() == DialogResult.OK)
                 {
@@ -73,7 +68,7 @@ namespace AutoRepairShopView
                    Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                     try
                     {
-                        service.DelElement(id);
+                        APIClient.PostRequest<SStockBinding, bool>("api/Stock/DelElement", new SStockBinding { Id = id });
                     }
                     catch (Exception ex)
                     {

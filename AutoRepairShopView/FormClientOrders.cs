@@ -1,5 +1,5 @@
 ﻿using AutoRepairShopDAL.Binding;
-using AutoRepairShopDAL.Interface;
+using AutoRepairShopDAL.View;
 using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
@@ -10,19 +10,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Unity;
-
 namespace AutoRepairShopView
 {
     public partial class FormClientOrders : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-        private readonly IReport service;
-        public FormClientOrders(IReport service)
+        public FormClientOrders()
         {
             InitializeComponent();
-            this.service = service;
         }
         private void buttonMake_Click(object sender, EventArgs e)
         {
@@ -40,13 +34,15 @@ namespace AutoRepairShopView
                 " по " +
                dateTimePicker2.Value.ToShortDateString());
                 reportViewer1.LocalReport.SetParameters(parameter);
-                var dataSource = service.GetClientOrders(new ReportBinding
-                {
+                List<SClientOrders> response =
+               APIClient.PostRequest<ReportBinding,
+               List<SClientOrders>>("api/Report/GetSClientOrders", new ReportBinding
+               {
                     DateFrom = dateTimePicker1.Value,
                     DateTo = dateTimePicker2.Value
                 });
                 ReportDataSource source = new ReportDataSource("DataSetOrders",
-               dataSource);
+               response);
                 reportViewer1.LocalReport.DataSources.Add(source);
                 reportViewer1.RefreshReport();
             }
@@ -73,7 +69,8 @@ namespace AutoRepairShopView
             {
                 try
                 {
-                    service.SaveClientOrders(new ReportBinding
+                    APIClient.PostRequest<ReportBinding,
+                    bool>("api/Report/SaveClientOrders", new ReportBinding
                     {
                         FileName = sfd.FileName,
                         DateFrom = dateTimePicker1.Value,

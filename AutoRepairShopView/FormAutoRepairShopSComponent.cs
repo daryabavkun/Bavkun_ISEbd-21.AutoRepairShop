@@ -3,22 +3,17 @@ using System.Collections.Generic;
 using AutoRepairShopDAL.View;
 using AutoRepairShopDAL.Interface;
 using System.Windows.Forms;
-using Unity;
 using AutoRepairShopDAL.Binding;
 
 namespace AutoRepairShopView
 {
     public partial class FormAutoRepairShopSComponent : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
         public int Id { set { id = value; } }
-        private readonly ISComponent service;
         private int? id;
-        public FormAutoRepairShopSComponent(ISComponent service)
+        public FormAutoRepairShopSComponent()
         {
             InitializeComponent();
-            this.service = service;
         }
         private void FormAutoRepairShopComponent_Load(object sender, EventArgs e)
         {
@@ -26,7 +21,7 @@ namespace AutoRepairShopView
             {
                 try
                 {
-                    SComponentView view = service.GetElement(id.Value);
+                    SComponentView view = APIClient.GetRequest<SComponentView>("api/Material/Get/" + id.Value); ;
                     if (view != null)
                     {
                         textBox.Text = view.ComponentName;
@@ -51,7 +46,7 @@ namespace AutoRepairShopView
             {
                 if (id.HasValue)
                 {
-                    service.UpdElement(new SComponentBinding
+                    APIClient.PostRequest<SComponentBinding, bool>("api/Material/UpdElement", new SComponentBinding
                     {
                         Id = id.Value,
                         ComponentName = textBox.Text
@@ -59,7 +54,7 @@ namespace AutoRepairShopView
                 }
                 else
                 {
-                    service.AddElement(new SComponentBinding
+                    APIClient.PostRequest<SComponentBinding, bool>("api/Material/AddElement", new SComponentBinding
                     {
                         ComponentName = textBox.Text
                     });

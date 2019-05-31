@@ -3,30 +3,21 @@ using System.Collections.Generic;
 using AutoRepairShopDAL.View;
 using AutoRepairShopDAL.Interface;
 using System.Windows.Forms;
-using Unity;
 using AutoRepairShopDAL.Binding;
 
 namespace AutoRepairShopView
 {
     public partial class FormAutoRepairShopCreateSOrder : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-        private readonly ISClient serviceC;
-        private readonly IGood serviceP;
-        private readonly IMain serviceM;
-        public FormAutoRepairShopCreateSOrder(ISClient serviceC, IGood serviceP, IMain serviceM)
+        public FormAutoRepairShopCreateSOrder()
         {
             InitializeComponent();
-            this.serviceC = serviceC;
-            this.serviceP = serviceP;
-            this.serviceM = serviceM;
         }
         private void FormAutoRepairShopCreateOrder_Load(object sender, EventArgs e)
         {
             try
             {
-                List<SClientView> listC = serviceC.GetList();
+                List<SClientView> listC = APIClient.GetRequest<List<SClientView>>("api/Client/GetList");
                 if (listC != null)
                 {
                     comboBox1.DisplayMember = "ClientFIO";
@@ -34,7 +25,7 @@ namespace AutoRepairShopView
                     comboBox1.DataSource = listC;
                     comboBox1.SelectedItem = null;
                 }
-                List<GoodView> listP = serviceP.GetList();
+                List<GoodView> listP = APIClient.GetRequest<List<GoodView>>("api/Good/GetList");
                 if (listP != null)
                 {
                     comboBox2.DisplayMember = "ProductName";
@@ -57,7 +48,7 @@ namespace AutoRepairShopView
                 try
                 {
                     int id = Convert.ToInt32(comboBox2.SelectedValue);
-                    GoodView product = serviceP.GetElement(id);
+                    GoodView product = APIClient.GetRequest<GoodView>("api/Good/Get/" + id);
                     int count = Convert.ToInt32(textBox.Text);
                     textBox2.Text = (count * product.Price).ToString();
                 }
@@ -99,7 +90,7 @@ namespace AutoRepairShopView
             }
             try
             {
-                serviceM.CreateOrder(new SOrderBinding
+                APIClient.PostRequest<SOrderBinding, bool>("api/Main/CreateOrder", new SOrderBinding
                 {
                     ClientId = Convert.ToInt32(comboBox1.SelectedValue),
                     ProductId = Convert.ToInt32(comboBox2.SelectedValue),

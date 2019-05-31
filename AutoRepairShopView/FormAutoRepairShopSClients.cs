@@ -3,9 +3,8 @@ using AutoRepairShop;
 using System.Collections.Generic;
 using AutoRepairShopView;
 using AutoRepairShopDAL.View;
-using AutoRepairShopDAL.Interface;
+using AutoRepairShopDAL.Binding;
 using System.Windows.Forms;
-using Unity;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -17,13 +16,9 @@ namespace AutoRepairShopView
 {
     public partial class FormAutoRepairShopSClients : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-        private readonly ISClient service;
-        public FormAutoRepairShopSClients(ISClient service)
+        public FormAutoRepairShopSClients()
         {
             InitializeComponent();
-            this.service = service;
         }
         private void FormAutoRepairShopClients_Load(object sender, EventArgs e)
         {
@@ -33,7 +28,7 @@ namespace AutoRepairShopView
         {
             try
             {
-                List<SClientView> list = service.GetList();
+                List<SClientView> list = APIClient.GetRequest<List<SClientView>>("api/Client/GetList");
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
@@ -49,7 +44,7 @@ namespace AutoRepairShopView
         }
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormAutoRepairShopSClient>();
+            var form = new FormAutoRepairShopSClient();
             if (form.ShowDialog() == DialogResult.OK)
             {
                 LoadData();
@@ -60,7 +55,7 @@ namespace AutoRepairShopView
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                var form = Container.Resolve<FormAutoRepairShopSClient>();
+                var form = new FormAutoRepairShopSClient();
                 form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                 if (form.ShowDialog() == DialogResult.OK)
                 {
@@ -79,7 +74,7 @@ namespace AutoRepairShopView
                    Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                     try
                     {
-                        service.DelElement(id);
+                        APIClient.PostRequest<SClientBinding, bool>("api/Client/DelElement", new SClientBinding { Id = id });
                     }
                     catch (Exception ex)
                     {
