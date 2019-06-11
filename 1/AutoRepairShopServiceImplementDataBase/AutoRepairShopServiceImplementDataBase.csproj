@@ -76,13 +76,9 @@
     <Compile Include="Implementations\MainServiceDB.cs" />
     <Compile Include="Implementations\SClientServiceDB.cs" />
     <Compile Include="Implementations\SStockServiceDB.cs" />
-    <Compile Include="Migrations\201905301834358_FirstM.cs" />
-    <Compile Include="Migrations\201905301834358_FirstM.Designer.cs">
-      <DependentUpon>201905301834358_FirstM.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201905311021394_SecondM.cs" />
-    <Compile Include="Migrations\201905311021394_SecondM.Designer.cs">
-      <DependentUpon>201905311021394_SecondM.cs</DependentUpon>
+    <Compile Include="Migrations\201906111048267_InitDB.cs" />
+    <Compile Include="Migrations\201906111048267_InitDB.Designer.cs">
+      <DependentUpon>201906111048267_InitDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -108,11 +104,8 @@
     <None Include="Resources\TIMCYR.TTF" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201905301834358_FirstM.resx">
-      <DependentUpon>201905301834358_FirstM.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905311021394_SecondM.resx">
-      <DependentUpon>201905311021394_SecondM.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906111048267_InitDB.resx">
+      <DependentUpon>201906111048267_InitDB.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

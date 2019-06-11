@@ -7,13 +7,13 @@ namespace AutoRepairShopServiceImplementDataBase.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class SecondM : IMigrationMetadata
+    public sealed partial class InitDB : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(SecondM));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitDB));
         
         string IMigrationMetadata.Id
         {
-            get { return "201905311021394_SecondM"; }
+            get { return "201906111048267_InitDB"; }
         }
         
         string IMigrationMetadata.Source
